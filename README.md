@@ -7,3 +7,11 @@ implementation of the DFAA algorithm. More info could be found in the
 In the bin directory there is a tiny DirectX9 standalone demo (just windows exe file). 
 It's free of any viruses and doesn't touch any files or sockets.
 
+---
+
+## License
+
+The code in this repository is Public-domain software.
+
+![Pubic domain software](http://alexpolt.github.io/images/public_domain_mark.png)
+
