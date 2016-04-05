@@ -1,0 +1,2 @@
+# DFAA
+Antialiasing algorithm
