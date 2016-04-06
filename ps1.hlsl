@@ -13,8 +13,9 @@ float2 dfaa( float2 uv01 ) {
   float2 uvdy = ddy( uv01 );
 
   //area - coverage, (steps+1)^2 - total number of samples, rad - radius of sampling
+  //steps=3 is a good starting point
 
-  float area=0, steps=4, rad=0.5;
+  float area=0, steps=3, rad=0.5;
 
   //compute coverage
 
@@ -47,6 +48,7 @@ float2 dfaa( float2 uv01 ) {
   else if( uv01.x > uv01.y && (uv01.x+2*uv01.y) < 1 ) dir = float2( xydu.y, -xydu.x );
   else dir = float2( z.y, -z.x );
 
+  //so that we don't have to worry about winding of uv's
   dir = cross( float3(xydu, 0), float3(xydv, 0) ).z > 0 ? dir : -dir;
 
   //encode direction as an angle
