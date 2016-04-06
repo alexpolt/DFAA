@@ -16,6 +16,8 @@ float2 dfaa( float2 uv01 ) {
 
   float area=0, steps=4, rad=0.5;
 
+  //compute coverage
+
   for(float y=0; y<=steps; y++) {
     for(float x=0; x<=steps; x++) {
       float2 dxdy = float2( 2*rad*x/steps - rad, 2*rad*y/steps - rad );
