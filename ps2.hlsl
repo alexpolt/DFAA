@@ -6,8 +6,8 @@ Alexandr Poltavsky
 */
 
 
-sampler tex0 : register(s0);
-sampler tex1 : register(s1);
+sampler tex0 : register(s0); //pixel to display
+sampler tex1 : register(s1); //coverage and direction
 
 static const float pi2 = 2*3.1415926;
 
