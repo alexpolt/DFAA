@@ -21,8 +21,6 @@ float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
   float2 sdx = ddx( screenxy );
   float2 sdy = ddy( screenxy );
 
-  if( noaa ) return float4( color0.rgb, 1 );
-
   float4 color1 = tex2D(tex0, screenxy + sdx*dir.x + sdy*dir.y );
 
   float4 color = lerp( color1, color0, area );
