@@ -7,17 +7,26 @@ Alexandr Poltavsky
 
 static const float pi2 = 2*3.1415926;
 
-float2 dfaa( float2 uv01 ) {
+//rad - radius of sampling, 0.5 half-pixel
+static float rad = 0.5;
+
+//steps is hardcoded to 3 to pack DFAA into one byte
+//(steps+1)^2 - total number of steps
+static float steps = 3;
+
+
+//Implementation of the DFAA algorithm
+//should be fed with a [0,0],[1,0],[0,1] UV
+//return one byte with packed direction and coverage
+
+float DFAA( float2 uv01 ) {
 
   float2 uvdx = ddx( uv01 );
   float2 uvdy = ddy( uv01 );
 
-  //area - coverage, (steps+1)^2 - total number of samples, rad - radius of sampling
-  //steps=3 is a good starting point
+  float area=0;
 
-  float area=0, steps=3, rad=0.5;
-
-  //compute coverage
+  //compute non-coverage
 
   for(float y=0; y<=steps; y++) {
     for(float x=0; x<=steps; x++) {
@@ -28,7 +37,7 @@ float2 dfaa( float2 uv01 ) {
     } 
   }
 
-  //get coverage
+  //get actual coverage
   area = 1 - area / pow(steps+1, 2);
 
   //the next big step is to compute the direction of sampling
@@ -55,8 +64,12 @@ float2 dfaa( float2 uv01 ) {
   float dir_atan = atan2( dir.y, dir.x );
   float dir_angle = ( dir_atan < 0 ? dir_atan + pi2 : dir_atan ) / pi2;
 
-  return float2( dir_angle, area );
+  //pack into one byte
+  float dfaa =  ( floor(15*dir_angle)*16 + 15*area ) / 255;
+
+  return dfaa;
 
 }
+
 
 
