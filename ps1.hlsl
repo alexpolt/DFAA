@@ -1,5 +1,5 @@
 /*
-The most basic implementation of DFAA Antialiasing Algorithm.
+The most basic implementation of the DFAA Antialiasing Algorithm.
 More info is in the blog post http://alexpolt.github.io/dfaa.html
 
 Alexandr Poltavsky
@@ -7,7 +7,7 @@ Alexandr Poltavsky
 
 static const float pi2 = 2*3.1415926;
 
-//rad - radius of sampling, 0.5 half-pixel
+//rad - radius of sampling, 0.5 means half-pixel
 static float rad = 0.5;
 
 //steps is hardcoded to 3 to pack DFAA into one byte
@@ -48,10 +48,12 @@ float DFAA( float2 uv01 ) {
   float2 dir;
   float2 uvdx2 = normalize( uvdx ), uvdy2 = normalize( uvdy );
 
+  //matrix inverse
   float det = 1 / ( uvdx2.x * uvdy2.y - uvdx2.y * uvdy2.x );
   float2 xydu = det * float2( uvdy2.y, -uvdx2.y );
   float2 xydv = det * float2( -uvdy2.x, uvdx2.x );
 
+  //choosing the edge using triangle medians
   float2 z = float2( xydv - xydu );
   if( uv01.y > uv01.x && (uv01.y+2*uv01.x) < 1 ) dir = float2( -xydv.y, xydv.x );
   else if( uv01.x > uv01.y && (uv01.x+2*uv01.y) < 1 ) dir = float2( xydu.y, -xydu.x );
