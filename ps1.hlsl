@@ -10,8 +10,7 @@ static const float pi2 = 2*3.1415926;
 //rad - radius of sampling, 0.5 means half-pixel
 static float rad = 0.5;
 
-//steps is hardcoded to 3 to pack DFAA into one byte
-//(steps+1)^2 - total number of steps
+//(steps+1)^2 - total number subsamples for coverage computation
 static float steps = 3;
 
 
