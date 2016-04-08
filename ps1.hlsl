@@ -8,14 +8,8 @@ Alexandr Poltavsky
 //forward declaration
 float DFAA( float2 uv01 ); 
 
+
 static const float pi2 = 2*3.1415926;
-
-//rad - radius of sampling, 0.5 means half-pixel
-static float rad = 0.5;
-
-//(steps+1)^2 - total number subsamples for coverage computation
-static float steps = 3;
-
 
 
 /* first pass pixel shader main */
@@ -29,9 +23,13 @@ float4 main( float2 uv01: TEXCOORD0 ) : COLOR0
 
 
 
+
 //Implementation of the DFAA algorithm
 //should be fed with a [0,0],[1,0],[0,1] UV
 //returns one byte with packed direction and coverage
+
+static float rad = 0.5; //rad - radius of sampling, 0.5 means half-pixel
+static float steps = 3; //(steps+1)^2 - total number subsamples for coverage computation
 
 float DFAA( float2 uv01 ) {
 
