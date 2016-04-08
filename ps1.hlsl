@@ -10,7 +10,7 @@ float DFAA( float2 uv01 );
 
 static const float pi2 = 2*3.1415926;
 
-/* first pass pixel shader main */
+/* first pass pixel shader */
 float4 main( float2 uv01: TEXCOORD0 ) : COLOR0
 {   
 	float dfaa = DFAA( uv01 );

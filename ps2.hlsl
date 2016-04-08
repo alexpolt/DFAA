@@ -1,5 +1,5 @@
 /*
-The most basic implementation of DFAA Antialiasing Algorithm.
+The most basic implementation of the DFAA Antialiasing Algorithm.
 More info is in the blog post http://alexpolt.github.io/dfaa.html
 
 Alexandr Poltavsky
@@ -14,7 +14,7 @@ sampler tex0: register(s0);
 static const float pi2 = 2 * 3.1415926;
 
 
-/* full screen pixel shader main  */
+/* full screen pixel shader */
 float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
 
   return float4( DFAA( screenxy ), 1 );
