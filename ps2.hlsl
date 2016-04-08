@@ -25,7 +25,7 @@ float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
 #define dfaa_screen_texture tex0
 #define dfaa_tex2D tex2D
 
-//DFAA. Performs fetch, unpack and lerp.
+//DFAA full screen pass: performs fetch, unpack and lerp
 float3 DFAA( float2 screenxy ) {
   
   float4 color0 = dfaa_tex2D( dfaa_screen_texture, screenxy );
