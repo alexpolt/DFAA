@@ -5,6 +5,9 @@ More info is in the blog post http://alexpolt.github.io/dfaa.html
 Alexandr Poltavsky
 */
 
+//forward declaration
+float DFAA( float2 uv01 ); 
+
 static const float pi2 = 2*3.1415926;
 
 //rad - radius of sampling, 0.5 means half-pixel
@@ -14,9 +17,21 @@ static float rad = 0.5;
 static float steps = 3;
 
 
+
+/* first pass pixel shader main */
+float4 main( float2 uv01: TEXCOORD0 ) : COLOR0
+{   
+	float dfaa = DFAA( uv01 );
+
+	//returns some default color and packed dfaa in alpha
+	return float4( uv01, 1-uv01.x-uv01.y, dfaa ); 
+}
+
+
+
 //Implementation of the DFAA algorithm
 //should be fed with a [0,0],[1,0],[0,1] UV
-//return one byte with packed direction and coverage
+//returns one byte with packed direction and coverage
 
 float DFAA( float2 uv01 ) {
 
