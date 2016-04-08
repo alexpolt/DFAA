@@ -6,7 +6,7 @@ Alexandr Poltavsky
 */
 
 //forward declare
-float3 DFAA( float2 screenxy );
+float3 DFAA2( float2 screenxy );
 
 //pixel to display and packed DFAA in alpha
 sampler tex0: register(s0);
@@ -17,7 +17,7 @@ static const float pi2 = 2 * 3.1415926;
 /* full screen pixel shader */
 float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
 
-  return float4( DFAA( screenxy ), 1 );
+  return float4( DFAA2( screenxy ), 1 );
 
 }
 
@@ -26,7 +26,7 @@ float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
 #define dfaa_tex2D tex2D
 
 //DFAA full screen pass: performs fetch, unpack and lerp
-float3 DFAA( float2 screenxy ) {
+float3 DFAA2( float2 screenxy ) {
   
   float4 color0 = dfaa_tex2D( dfaa_screen_texture, screenxy );
   float dfaa_packed = color0.a;

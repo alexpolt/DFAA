@@ -6,28 +6,28 @@ Alexandr Poltavsky
 */
 
 //forward declaration
-float DFAA( float2 uv01 ); 
+float DFAA1( float2 uv01 ); 
 
 static const float pi2 = 2*3.1415926;
 
 /* first pass pixel shader */
 float4 main( float2 uv01: TEXCOORD0 ) : COLOR0
 {   
-	float dfaa = DFAA( uv01 );
+	float dfaa = DFAA1( uv01 );
 
 	//returns some default color and packed dfaa in alpha
 	return float4( uv01, 1-uv01.x-uv01.y, dfaa ); 
 }
 
 
-//Implementation of the DFAA algorithm
+//Implementation of the DFAA algorithm, first pass
 //should be fed with a [0,0],[1,0],[0,1] UV
 //returns one byte with packed direction and coverage
 
 static float rad = 0.5; //rad - radius of sampling, 0.5 means half-pixel
 static float steps = 3; //(steps+1)^2 - total number subsamples for coverage computation
 
-float DFAA( float2 uv01 ) {
+float DFAA1( float2 uv01 ) {
 
   float2 uvdx = ddx( uv01 );
   float2 uvdy = ddy( uv01 );
