@@ -21,15 +21,11 @@ float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
 
 }
 
-/*
-DFAA
-More info is in the blog post http://alexpolt.github.io/dfaa.html
-Alexandr Poltavsky
-*/
-
+//defines used by DFAA
 #define dfaa_screen_texture tex0
 #define dfaa_tex2D tex2D
 
+//DFAA. Performs fetch, unpack and lerp.
 float3 DFAA( float2 screenxy ) {
   
   float4 color0 = dfaa_tex2D( dfaa_screen_texture, screenxy );
