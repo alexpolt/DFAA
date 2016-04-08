@@ -14,7 +14,7 @@ sampler tex0: register(s0);
 static const float pi2 = 2 * 3.1415926;
 
 
-/*   pixel shader main    */
+/* full screen pixel shader main  */
 float4 main( float2 screenxy : TEXCOORD0 ) : COLOR0 {
 
 	return float4( DFAA( screenxy, color.a ), 1 );
@@ -30,7 +30,8 @@ Alexandr Poltavsky
 #define dfaa_screen_texture tex0
 #define dfaa_tex2D tex2D
 
-float3 DFAA(float2 screenxy, float dfaa_packed) {
+float3 DFAA( float2 screenxy, float dfaa_packed ) {
+
   float3 color0 = dfaa_tex2D( dfaa_screen_texture, screenxy ).rgb;
   
   //unpack
