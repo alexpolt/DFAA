@@ -8,9 +8,7 @@ Alexandr Poltavsky
 //forward declaration
 float DFAA( float2 uv01 ); 
 
-
 static const float pi2 = 2*3.1415926;
-
 
 /* first pass pixel shader main */
 float4 main( float2 uv01: TEXCOORD0 ) : COLOR0
@@ -20,8 +18,6 @@ float4 main( float2 uv01: TEXCOORD0 ) : COLOR0
 	//returns some default color and packed dfaa in alpha
 	return float4( uv01, 1-uv01.x-uv01.y, dfaa ); 
 }
-
-
 
 
 //Implementation of the DFAA algorithm
