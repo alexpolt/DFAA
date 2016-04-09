@@ -10,7 +10,8 @@ float DFAA1( float2 uv01 );
 
 static const float pi2 = 2*3.1415926;
 
-/* first pass pixel shader */
+/* first pass pixel shader, uv01 should be with noperspective modifier */
+
 float4 main( noperspective float2 uv01: TEXCOORD0 ) : COLOR0
 {   
 	float dfaa = DFAA1( uv01 );
