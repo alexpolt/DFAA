@@ -107,7 +107,7 @@ R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 )
         } 
     }
 
-    if( i == mv_size) //no mask was found, means we've got a bad tri
+    if( i == mv_size) //no mask was found, means we've got a tri with no proper mapping, gets zeros
       bad_tri++; //print it to get the number of tris with wrong vertex ids, no or partial AA on them
 
   }
