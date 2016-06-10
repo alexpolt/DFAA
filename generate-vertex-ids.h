@@ -11,9 +11,6 @@ R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 )
     ++vertex_count;
   }
 
-  int vid = 1; //vertex id
-  int bad_tri = 0; //number of tris for which no vertex id could be generated
-
   #define mask(a,b,c) ((a) << 4) | ((b) << 2) | (c)
   typedef unsigned char byte;
 
@@ -68,41 +65,31 @@ R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 )
 
   };
 
-  //get the memory for the resulting vid buffer
-  R* vids = (R*) operator new( vertex_count * sizeof( R ) );
+  //get the memory for the resulting vid buffer, delete with delete[]
+  R* vids = new R[ vertex_count ];
 
-  //init it with zeros
-  for( int i = 0; i < vertex_count; i++ ) vids[ i ] = 0; 
+  //init it with 3 (3 means vacant)
+  for( int i = 0; i < vertex_count; i++ ) vids[ i ] = 3;
+
+  int bad_tri = 0; //number of tris for which no good 0,1,2 mapping exists
 
   //loop through the index buffer
   for( int idx = 0; idx < index_count; idx+=3 ) {
 
-    unsigned idx0 = index_buffer[idx], idx1 = index_buffer[idx+1], idx2 = index_buffer[idx+2]; 
-    unsigned vid0 = vids[ idx0 ], vid1 = vids[ idx1 ], vid2 = vids[ idx2 ]; //existing vertex ids
-    byte m = mask( !vid0 ? 3 : vid0%3, !vid1 ? 3 : vid1%3, !vid2 ? 3 : vid2%3 ); //helper mask, value 3 means vacant vertex id
+    byte m = mask( vids[ index_buffer[idx+0] ], 
+                   vids[ index_buffer[idx+1] ], 
+                   vids[ index_buffer[idx+2] ] ); //helper mask for searching in mv array
 
     //loop through the mv array and find the mapping
     int i = 0; const int mv_size = sizeof(mv)/sizeof(mv[0]);
     for(; i < mv_size; i++ ) {
 
         if( m == mv[i].mask ) {
-            if( 3 == mv[i].value[0] ) break; //proper vids are already in place
-
-            if(!vid0) { 
-              do { ++vid; } while( vid%3 != mv[i].value[0] );
-              vids[ idx0 ] = vid;
-            }
-
-            if(!vid1) { 
-              do { ++vid; } while( vid%3 != mv[i].value[1] );
-              vids[ idx1 ] = vid;
-            }
-
-            if(!vid2) { 
-              do { ++vid; } while( vid%3 != mv[i].value[2] );
-              vids[ idx2 ] = vid;
-            }
-
+            if( 3 == mv[i].value[0] ) break; //proper vids are already in place, early out
+            //assign
+            vids[idx+0] = mv[i].value[0];
+            vids[idx+1] = mv[i].value[1];
+            vids[idx+2] = mv[i].value[2];
             break;
         } 
     }
