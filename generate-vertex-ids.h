@@ -1,3 +1,11 @@
+/*
+The code to generate a vertex buffer with 0,1,2 mapping,
+that can be used in a shader to index into:
+float2 uv01[] = {{0,0},{1,0},{0,1}}
+Delete the returned buffer with a delete[] operator.
+
+Alexandr Poltavsky
+*/
 
 template<typename R, typename T>
 R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 ) {
@@ -87,9 +95,9 @@ R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 )
         if( m == mv[i].mask ) {
             if( 3 == mv[i].value[0] ) break; //proper vids are already in place, early out
             //assign
-            vids[idx+0] = mv[i].value[0];
-            vids[idx+1] = mv[i].value[1];
-            vids[idx+2] = mv[i].value[2];
+            vids[ index_buffer[idx+0] ] = mv[i].value[0];
+            vids[ index_buffer[idx+1] ] = mv[i].value[1];
+            vids[ index_buffer[idx+2] ] = mv[i].value[2];
             break;
         } 
     }
@@ -98,6 +106,9 @@ R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 )
       bad_tri++; //print it to get the number of tris with wrong vertex ids, no or partial AA on them
 
   }
+
+  //clean up any remaining 3s
+  for( int i = 0; i < vertex_count; i++ ) vids[i] = vids[i] == 3 ? 0 : vids[i];
 
   return vids;
 }
