@@ -4,6 +4,11 @@ that can be used in a shader to index into:
 float2 uv01[] = {{0,0},{1,0},{0,1}}
 Delete the returned buffer with a delete[] operator.
 
+Parameters:
+index_buffer: index buffer
+index_count: number of indices ( number of tries * 3 )
+vertex_count (optional): size of the generated buffer (by default looks up the largest index and uses it)
+
 Alexandr Poltavsky
 */
 
@@ -14,6 +19,7 @@ R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 )
   if( ! index_buffer ) return nullptr;
   if( ! index_count ) return nullptr;
   if( ! vertex_count ) {
+    //look up the largest index to use it as the generated buffer size
     for( int i = 0; i < index_count; i++ ) 
         vertex_count = vertex_count < index_buffer[i] ? index_buffer[i] : vertex_count;
     ++vertex_count;
