@@ -13,7 +13,7 @@ Alexandr Poltavsky
 */
 
 template<typename R, typename T>
-R* generate_vertex_ids( T* index_buffer, int index_count, int vertex_count = 0 ) {
+R* generate_uv_ids( T* index_buffer, int index_count, int vertex_count = 0 ) {
 
   //check preconditions
   if( ! index_buffer ) return nullptr;
