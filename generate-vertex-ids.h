@@ -1,5 +1,5 @@
 /*
-The code to generate a vertex buffer with 0,1,2 mapping,
+The code to generate a buffer with 0,1,2 mapping for index geometry,
 that can be used in a shader to index into:
 float2 uv01[] = {{0,0},{1,0},{0,1}}
 Delete the returned buffer with a delete[] operator.
